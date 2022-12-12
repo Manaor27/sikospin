@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Jenis Pinjaman</title>
+    <title>Update Jenis Pinjaman</title>
 </head>
 <body>
 @extends('layouts.app')
@@ -49,14 +49,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Tambah Pinjaman</h1>
+            <h1 class="m-0">Update Pinjaman</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
               <li class="breadcrumb-item">Pengaturan</li>
               <li class="breadcrumb-item"><a href="/jenis_pinjaman">Kelola Pinjaman</a></li>
-              <li class="breadcrumb-item active">Tambah Pinjaman</li>
+              <li class="breadcrumb-item active">Update Pinjaman</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -73,31 +73,32 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <!-- form start -->
-              <form method="POST" action="simpan_pinjaman" class="form-horizontal">
+              <form method="POST" action="update_pinjaman{{ $data->id }}" class="form-horizontal">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Jenis Pinjaman</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" placeholder="Input Jenis Pinjaman" name="jenis">
+                      <input type="text" class="form-control" placeholder="Input Jenis Pinjaman" name="jenis" value="{{ $data->jenis_pinjaman }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Lama Angsuran (bulan)</label>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" placeholder="Input Lama Angsuran" name="lama">
+                      <input type="number" class="form-control" placeholder="Input Lama Angsuran" name="lama" value="{{ $data->lama }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Bunga %</label>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" name="bunga" placeholder="Input Bunga">
+                      <input type="number" class="form-control" name="bunga" placeholder="Input Bunga"  value="{{ $data->bunga }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Maksimal Pinjaman</label>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" placeholder="Input Maksimal Pinjaman" name="max">
+                      <input type="number" class="form-control" placeholder="Input Maksimal Pinjaman" name="max" value="{{ $data->max }}">
                     </div>
                   </div>
                 </div>

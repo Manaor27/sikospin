@@ -1,83 +1,50 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnggotaController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/anggota', function () {
-    return view('anggota.home');
-});
-
-Route::get('/pengajuan', function () {
-    return view('anggota.pengajuan');
-});
-
-Route::get('/transaksi', function () {
-    return view('anggota.transaksi');
-});
-
-Route::get('/riwayat', function () {
-    return view('anggota.riwayat');
-});
-
-Route::get('/admin', function () {
-    return view('admin.home');
-});
-
-Route::get('/data_anggota', function () {
-    return view('admin.anggota');
-});
-
-Route::get('/tambah_anggota', function () {
-    return view('admin.tambah_anggota');
-});
-
-Route::get('/data_pengajuan', function () {
-    return view('admin.pengajuan');
-});
-
-Route::get('/data_transaksi', function () {
-    return view('admin.transaksi');
-});
-
-Route::get('/angsuran', function () {
-    return view('admin.angsuran');
-});
-
-Route::get('/laporan_anggota', function () {
-    return view('admin.laporan_anggota');
-});
-
-Route::get('/laporan_pinjaman', function () {
-    return view('admin.laporan_pinjaman');
-});
-
-Route::get('/jenis_pinjaman', function () {
-    return view('admin.jenis_pinjaman');
-});
-
-Route::get('/tambah_pinjaman', function () {
-    return view('admin.tambah_pinjaman');
-});
-
-Route::get('/data_riwayat', function () {
-    return view('admin.riwayat');
-});
-
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+ 
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
+ 
+    Route::middleware(['admin'])->group(function () {
+        Route::get('admin', [AdminController::class, 'index']);
+        Route::get('data_anggota', [AdminController::class, 'anggota']);
+        Route::get('edit_anggota{id}', [AdminController::class, 'edit_anggota']);
+        Route::put('update_anggota{id}', [AdminController::class, 'update_anggota']);
+        Route::get('data_pengajuan', [AdminController::class, 'pengajuan']);
+        Route::get('setuju{id}', [AdminController::class, 'setuju']);
+        Route::get('tolak{id}', [AdminController::class, 'tolak']);
+        Route::get('data_transaksi', [AdminController::class, 'transaksi']);
+        Route::get('angsuran{id}', [AdminController::class, 'angsuran']);
+        Route::get('angsur{id}', [AdminController::class, 'angsur']);
+        Route::get('laporan_anggota', [AdminController::class, 'laporan_anggota']);
+        Route::get('laporan_pinjaman', [AdminController::class, 'laporan_peminjaman']);
+        Route::get('jenis_pinjaman', [AdminController::class, 'jenis_pinjaman']);
+        Route::get('data_riwayat', [AdminController::class, 'riwayat']);
+        Route::get('tambah_anggota', [AdminController::class, 'tambah_anggota']);
+        Route::post('simpan_anggota', [AdminController::class, 'simpan_anggota']);
+        Route::get('hapus_anggota{id}', [AdminController::class, 'hapus_anggota']);
+        Route::get('tambah_pinjaman', [AdminController::class, 'tambah_pinjaman']);
+        Route::post('simpan_pinjaman', [AdminController::class, 'simpan_pinjaman']);
+        Route::get('hapus_pinjaman{id}', [AdminController::class, 'hapus_pinjaman']);
+        Route::get('edit_pinjaman{id}', [AdminController::class, 'edit_pinjaman']);
+        Route::put('update_pinjaman{id}', [AdminController::class, 'update_pinjaman']);
+    });
+
+    Route::middleware(['anggota'])->group(function () {
+        Route::get('anggota', [AnggotaController::class, 'index']);
+        Route::get('pengajuan', [AnggotaController::class, 'pengajuan']);
+        Route::get('transaksi', [AnggotaController::class, 'transaksi']);
+        Route::get('riwayat', [AnggotaController::class, 'riwayat']);
+        Route::post('tambahpengajuan', [AnggotaController::class, 'simpan']);
+    });
+});

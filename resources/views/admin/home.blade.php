@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> Admin
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -86,12 +71,15 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>PINJAMAN</h3>
-                <p>RP 300.000.000</p>
+                <p>
+                  <?php 
+                    echo "Rp. " .number_format($pinjaman, 0, '', '.');
+                  ?>
+                </p>
               </div>
               <div class="icon">
                 <i class="ion ion-cash"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -100,12 +88,15 @@
             <div class="small-box bg-danger">
               <div class="inner">
                 <h3>DENDA</h3>
-                <p>RP 0</p>
+                <p>
+                  <?php 
+                    echo "Rp. " .number_format($denda, 0, '', '.');
+                  ?>
+                </p>
               </div>
               <div class="icon">
                 <i class="fas fa-dollar-sign"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -114,12 +105,15 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>ANGSURAN</h3>
-                <p>RP 3.000.000</p>
+                <p>
+                  <?php 
+                    echo "Rp. " .number_format($angsuran, 0, '', '.');
+                  ?>
+                </p>
               </div>
               <div class="icon">
                 <i class="fas fa-copy"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -128,12 +122,11 @@
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3>ANGGOTA</h3>
-                <p>5 Orang</p>
+                <p>{{ $anggota }} Orang</p>
               </div>
               <div class="icon">
                 <i class="fas fa-copy"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

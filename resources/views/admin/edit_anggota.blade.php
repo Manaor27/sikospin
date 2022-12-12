@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data Anggota</title>
+    <title>Update Data Anggota</title>
 </head>
 <body>
 @extends('layouts.app')
@@ -49,14 +49,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Tambah Data Anggota</h1>
+            <h1 class="m-0">Update Data Anggota</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
               <li class="breadcrumb-item">Master Data</li>
               <li class="breadcrumb-item"><a href="/data_anggota">Master Data Anggota</a></li>
-              <li class="breadcrumb-item active">Tambah Data Anggota</li>
+              <li class="breadcrumb-item active">Update Data Anggota</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -73,25 +73,26 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <!-- form start -->
-              <form method="POST" action="simpan_anggota" class="form-horizontal">
+              <form method="POST" action="update_anggota{{ $data->id }}" class="form-horizontal">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" placeholder="Input email" name="email">
+                      <input type="email" class="form-control" placeholder="Input email" name="email" value="{{ $data->email }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control" placeholder="Input Password" name="password">
+                      <input type="password" class="form-control" placeholder="Input Password Baru" name="password">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nama Lengkap</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" placeholder="Input Nama Lengkap" name="nama">
+                      <input type="text" class="form-control" placeholder="Input Nama Lengkap" name="nama" value="{{ $data->name }}">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -99,11 +100,19 @@
                     <div class="col-sm-10 row">
                         <div class="form-check col-sm-2">
                             &nbsp;&nbsp;
+                            @if($data->jekel == 'Laki-laki')
+                            <input class="form-check-input" type="radio" name="jekel" value="Laki - laki" checked>
+                            @else
                             <input class="form-check-input" type="radio" name="jekel" value="Laki - laki">
+                            @endif
                             <label class="form-check-label">Laki - Laki</label>
                         </div>
                         <div class="form-check col-sm-2">
+                            @if($data->jekel == 'Perempuan')
+                            <input class="form-check-input" type="radio" name="jekel" value="Perempuan" checked>
+                            @else
                             <input class="form-check-input" type="radio" name="jekel" value="Perempuan">
+                            @endif
                             <label class="form-check-label">Perempuan</label>
                         </div>
                     </div>
@@ -111,25 +120,25 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Tempat Lahir</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" placeholder="Input Tempat Lahir" name="tempat_lahir">
+                      <input type="text" class="form-control" placeholder="Input Tempat Lahir" name="tempat_lahir" value="{{ $data->tempat_lahir }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
                     <div class="col-sm-10">
-                      <input type="date" class="form-control" name="tgl_lahir">
+                      <input type="date" class="form-control" name="tgl_lahir" value="{{ $data->tgl_lahir }}">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Alamat</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" placeholder="Enter ..." name="alamat"></textarea>
+                        <textarea class="form-control" placeholder="Enter ..." name="alamat">{{ $data->alamat }}</textarea>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Pekerjaan</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" placeholder="Input Pekerjaan" name="pekerjaan">
+                      <input type="text" class="form-control" placeholder="Input Pekerjaan" name="pekerjaan" value="{{ $data->pekerjaan }}">
                     </div>
                   </div>
                 </div>

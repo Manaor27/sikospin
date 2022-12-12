@@ -18,10 +18,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'no_anggota',
         'name',
         'email',
+        'pekerjaan',
+        'tempat_lahir',
+        'tgl_lahir',
+        'tgl_masuk',
+        'jekel',
         'password',
+        'role',
+        'alamat',
     ];
+
+    public function user() {
+        return $this->hasOne(Pinjaman::class, 'id_anggota');
+      }
 
     /**
      * The attributes that should be hidden for serialization.

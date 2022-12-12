@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> MR.Anggota
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -64,7 +49,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Transaksi MR. Anggota</h1>
+            <h1 class="m-0">Transaksi {{ Auth::user()->name }}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -87,30 +72,43 @@
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Nomor Pinjam</th>
-                    <th>Tanggal Pengajuan</th>
-                    <th>Besar Pinjam</th>
-                    <th>Jenis Pinjam</th>
-                    <th>Lama Angsuran</th>
-                    <th>Besar Angsuran</th>
-                    <th>Status</th>
-                    <th>Jatuh Tempo</th>
-                  </tr>
+                    <tr>
+                      <th>No</th>
+                      <th>Nomor Pinjam</th>
+                      <th>Tanggal Pengajuan</th>
+                      <th>Besar Pinjam</th>
+                      <th>Jenis Pinjam</th>
+                      <th>Lama Angsuran</th>
+                      <th>Besar Angsuran</th>
+                      <th>Status</th>
+                      <th>Jatuh Tempo</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>001</td>
-                    <td><?php echo date('d-m-y'); ?></td>
-                    <td>5.000.000</td>
-                    <td>Pinjaman Kecil</td>
-                    <td>3 Bulan dari 12 Bulan</td>
-                    <td>833.000</td>
-                    <td><span class="badge bg-danger">Belum Lunas</span></td>
-                    <td>05-12-2022</td>
-                  </tr>
+                    @php
+                      $no = 1;
+                    @endphp
+                    @foreach($angsuran as $a)
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $a->angsuran->no_pinjam }}</td>
+                      <td>{{ $a->angsuran->tgl_pengajuan }}</td>
+                      <td>
+                        <?php 
+                          echo "Rp. " .number_format($a->angsuran->jum_pinjaman, 0, '', '.');
+                        ?>
+                      </td>
+                      <td>{{ $a->angsuran->jenis->jenis_pinjaman }}</td>
+                      <td>{{ $a->lama }} Bulan dari 12 Bulan</td>
+                      <td>
+                        <?php 
+                          echo "Rp. " .number_format($a->angsuran->besar_angsuran, 0, '', '.');
+                        ?>
+                      </td>
+                      <td><span class="badge bg-danger">Belum Lunas</span></td>
+                      <td>{{ $a->jatuh_tempo }}</td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

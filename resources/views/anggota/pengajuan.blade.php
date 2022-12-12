@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> MR.Anggota
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -106,17 +91,38 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>001</td>
-                    <td><?php echo date('d-m-y'); ?></td>
-                    <td>2.000.000</td>
-                    <td>12 Bulan</td>
-                    <td>Pinjaman Kecil</td>
-                    <td>170.000</td>
-                    <td><span class="badge bg-warning">Menunggu</span></td>
-                    <td>00-00-0000</td>
-                  </tr>
+                  @php
+                    $no = 1;
+                  @endphp
+                  @foreach($pengajuan as $p)
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $p->no_pinjam }}</td>
+                      <td>{{ $p->tgl_pengajuan }}</td>
+                      <td>
+                        <?php 
+                          echo "Rp. " .number_format($p->jum_pinjaman, 0, '', '.');
+                        ?>
+                      </td>
+                      <td>{{ $p->jenis->lama }} Bulan</td>
+                      <td>{{ $p->jenis->jenis_pinjaman }}</td>
+                      <td>
+                        <?php 
+                          echo "Rp. " .number_format($p->besar_angsuran, 0, '', '.');
+                        ?>
+                      </td>
+                      <td>
+                        @if($p->status == 'Menunggu')
+                        <span class="badge bg-warning">Menunggu</span>
+                        @elseif($p->status == 'Diterima')
+                        <span class="badge bg-success">Diterima</span>
+                        @else
+                        <span class="badge bg-danger">Ditolak</span>
+                        @endif
+                      </td>
+                      <td>{{ $p->tgl_terima }}</td>
+                    </tr>
+                  @endforeach
                   </tbody>
                 </table>
               </div>
@@ -143,9 +149,9 @@
                   <div class="form-group">
                     <label>Jenis Pinjaman</label>
                     <select class="form-control" name="jenis">
-                      <option>Pinjaman Kecil/Max 10.000.000/Bunga : 9%/Lama : 12 Bulan</option>
-                      <option>Pinjaman Sedang/Max 50.000.000/Bunga : 9%/Lama : 12 Bulan</option>
-                      <option>Pinjaman Besar/Max 100.000.000/Bunga : 9%/Lama : 12 Bulan</option>
+                      @foreach($jenis as $j)
+                      <option value="{{ $j->id }}">{{ $j->jenis_pinjaman }}/Max <?php echo "Rp. " .number_format($j->max, 0, '', '.'); ?>/Bunga : {{ $j->bunga }}%/Lama : {{ $j->lama }} Bulan</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">

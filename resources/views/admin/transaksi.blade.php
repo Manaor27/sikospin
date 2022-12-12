@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Data Pengajuan</title>
+    <title>Data Transaksi</title>
 </head>
 <body>
 @extends('layouts.app')
@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> MR.Anggota
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -97,16 +82,21 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>001</td>
-                    <td>Mr.Budi Sutedjo</td>
-                    <td>Pengusaha Lele</td>
-                    <td><?php echo date('d-m-Y'); ?></td>
-                    <td>
-                        <a href="angsuran" class="btn btn-primary">Pinjam & angsur</a>
-                    </td>
-                  </tr>
+                    @php
+                      $no = 1;
+                    @endphp
+                    @foreach($anggota as $a)
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $a->no_anggota }}</td>
+                      <td>{{ $a->name }}</td>
+                      <td>{{ $a->pekerjaan }}</td>
+                      <td>{{ $a->tgl_masuk }}</td>
+                      <td>
+                          <a href="angsuran{{ $a->id }}" class="btn btn-primary">Pinjam & angsur</a>
+                      </td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

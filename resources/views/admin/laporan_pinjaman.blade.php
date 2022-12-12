@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Data Pengajuan</title>
+    <title>Laporan Data Pengajuan</title>
 </head>
 <body>
 @extends('layouts.app')
@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> MR.Anggota
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -85,7 +70,7 @@
         <div class="row">
         <div class="col-12">
             <div class="card">
-              <div class="card-header" style="text-align: right;">
+              <!--div class="card-header" style="text-align: right;">
                 <form action="filter" method="post" class="form-horizontal">
                     @csrf
                     <div class="form-group row">
@@ -116,7 +101,7 @@
                         <button type="submit" class="btn btn-secondary col-sm-1">Filter</button>
                     </div>
                 </form>
-              </div>
+              </div-->
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-hover">
@@ -134,17 +119,30 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>001</td>
-                    <td>Mr.Budi Sutedjo</td>
-                    <td><?php echo date('d-m-Y'); ?></td>
-                    <td>RP 5.000.000</td>
-                    <td>Pinjaman Kecil</td>
-                    <td>3 Bulan dari 12 Bulan</td>
-                    <td><span class="badge bg-danger">Belum Lunas</span></td>
-                    <td><?php echo date('d-m-Y'); ?></td>
-                  </tr>
+                    @php
+                      $no = 1;
+                    @endphp
+                    @foreach($angsur as $a)
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $a->angsur->no_pinjam }}</td>
+                      <td>{{ $a->angsur->user->name }}</td>
+                      <td>{{ $a->angsur->tgl_pengajuan }}</td>
+                      <td>
+                        <?php 
+                          echo "Rp. " .number_format($a->angsur->jum_pinjaman, 0, '', '.');
+                        ?>
+                      </td>
+                      <td>{{ $a->angsur->jenis->jenis_pinjaman }}</td>
+                      <td>{{ $a->lama }} Bulan dari 12 Bulan</td>
+                      @if($a->status_angsur == 'Belum Lunas')
+                      <td><span class="badge bg-danger">Belum Lunas</span></td>
+                      @else
+                      <td><span class="badge bg-success">Lunas</span></td>
+                      @endif
+                      <td>{{ $a->jatuh_tempo }}</td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

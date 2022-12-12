@@ -19,21 +19,6 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-        </div>
-      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -41,7 +26,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i> MR.Anggota
+          <i class="fas fa-user"></i> {{ Auth::user()->name }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -107,20 +92,29 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>001</td>
-                    <td>christoper.dori@gmail.com</td>
-                    <td>Mr.Budi Sutedjo</td>
-                    <td>L</td>
-                    <td>Bogor, 12-12-2001</td>
-                    <td>PNS</td>
-                    <td><?php echo date('d-m-Y'); ?></td>
-                    <td>
-                        <a href="edit_anggota" class="btn btn-info"><i class="fas fa-pen"></i></a>
-                        <a href="hapus_anggota" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                    </td>
-                  </tr>
+                    @php
+                      $no = 1;
+                    @endphp
+                    @foreach($anggota as $a)
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $a->no_anggota }}</td>
+                      <td>{{ $a->email }}</td>
+                      <td>{{ $a->name }}</td>
+                      <td>{{ $a->jekel }}</td>
+                      <td>{{ $a->tempat_lahir }}, {{ $a->tgl_lahir }}</td>
+                      <td>{{ $a->pekerjaan }}</td>
+                      <td>{{ $a->tgl_masuk }}</td>
+                      <td>
+                          <a href="edit_anggota{{ $a->id }}" class="btn btn-info"><i class="fas fa-pen"></i></a>
+                          <a href="hapus_anggota{{ $a->id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><b>Alamat :</b></td>
+                      <td colspan="7">{{ $a->alamat }}</td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
