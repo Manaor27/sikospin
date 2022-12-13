@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
 
     public function transaksi(){
-        $anggota = Angsuran::join('pinjaman','id_pinjaman','=','pinjaman.id')->join('users','id_anggota','=','users.id')->where('users.role','anggota')->where('pinjaman.id','<>',null)->where('pinjaman.status','Diterima')->where('angsuran.status','Belum Lunas')->get()->sortDesc();
+        $anggota = Angsuran::join('pinjaman','id_pinjaman','=','pinjaman.id')->join('users','id_anggota','=','users.id')->where('users.role','anggota')->where('pinjaman.id','<>',null)->where('pinjaman.status','Diterima')->where('angsuran.status_angsur','Belum Lunas')->get()->sortDesc();
         return view('admin.transaksi', compact('anggota'));
     }
 
