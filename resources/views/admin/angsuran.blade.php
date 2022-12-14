@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Data Pengajuan</title>
+    <title>Angsuran</title>
+    <link rel="icon" href="logo_koperasi.png" type="image/png" />
 </head>
 <body>
 @extends('layouts.app')
@@ -49,13 +50,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Master Data Pengajuan</h1>
+            <h1 class="m-0">Angsuran</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
-              <li class="breadcrumb-item">Master Data</li>
-              <li class="breadcrumb-item active">Master Data Pengajuan</li>
+              <li class="breadcrumb-item">Transaksi</li>
+              <li class="breadcrumb-item active">Angsuran</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

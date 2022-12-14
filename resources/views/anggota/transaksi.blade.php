@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaksi</title>
+    <link rel="icon" href="logo_koperasi.png" type="image/png" />
 </head>
 <body>
 @extends('layouts.dash')
@@ -91,18 +92,18 @@
                     @foreach($angsuran as $a)
                     <tr>
                       <td>{{ $no++ }}</td>
-                      <td>{{ $a->angsuran->no_pinjam }}</td>
-                      <td>{{ $a->angsuran->tgl_pengajuan }}</td>
+                      <td>{{ $a->angsur->no_pinjam }}</td>
+                      <td>{{ $a->angsur->tgl_pengajuan }}</td>
                       <td>
                         <?php 
-                          echo "Rp. " .number_format($a->angsuran->jum_pinjaman, 0, '', '.');
+                          echo "Rp. " .number_format($a->angsur->jum_pinjaman, 0, '', '.');
                         ?>
                       </td>
-                      <td>{{ $a->angsuran->jenis->jenis_pinjaman }}</td>
+                      <td>{{ $a->angsur->jenis->jenis_pinjaman }}</td>
                       <td>{{ $a->lama }} Bulan dari 12 Bulan</td>
                       <td>
                         <?php 
-                          echo "Rp. " .number_format($a->angsuran->besar_angsuran, 0, '', '.');
+                          echo "Rp. " .number_format($a->angsur->besar_angsuran, 0, '', '.');
                         ?>
                       </td>
                       <td><span class="badge bg-danger">Belum Lunas</span></td>
