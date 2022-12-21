@@ -103,8 +103,12 @@
                       <td>{{ $a->lama }} Bulan dari 12 Bulan</td>
                       <td>
                         <?php 
-                          $angsuran = $a->angsur->besar_angsuran + ($a->angsur->jum_pinjaman * (10/100));
-                          echo "Rp. " .number_format($angsuran, 0, '', '.');
+                          if (date('Y-m-d') > $a->jatuh_tempo) {
+                            $angsuran = $a->angsur->besar_angsuran + ($a->angsur->jum_pinjaman * (10/100));
+                            echo "Rp. " .number_format($angsuran, 0, '', '.');
+                          } else {
+                            echo "Rp. " .number_format($a->angsur->besar_angsuran, 0, '', '.');
+                          }
                         ?>
                       </td>
                       <td><span class="badge bg-danger">Belum Lunas</span></td>

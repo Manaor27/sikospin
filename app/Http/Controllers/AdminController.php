@@ -61,13 +61,15 @@ class AdminController extends Controller
     }
 
     public function angsur($id){
-        $a = Angsuran::find($id);
-        $a->lama = ($a->lama+1);
-        $a->jatuh_tempo = date('Y-m-d', strtotime('+1 month', strtotime($a->jatuh_tempo)));
-        if ($a->lama == 12) {
-            $a->status_angsur = 'Lunas';
+        $variable = Angsuran::where('id_pinjaman',$id)->get();
+        foreach ($variable as $key => $a) {
+            $a->lama = ($a->lama+1);
+            $a->jatuh_tempo = date('Y-m-d', strtotime('+1 month', strtotime($a->jatuh_tempo)));
+            if ($a->lama == 12) {
+                $a->status_angsur = 'Lunas';
+            }
+            $a->save();
         }
-        $a->save();
         return redirect()->back();
     }
 

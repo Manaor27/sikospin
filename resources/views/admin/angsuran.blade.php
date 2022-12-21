@@ -115,7 +115,7 @@
                       @endif
                       <td>{{ $a->jatuh_tempo }}</td>
                       <td>
-                        @if($a->lama <> '12')
+                        @if($a->lama != '12')
                           <a href="angsur{{$a->id}}" class="btn btn-primary">ANGSUR</a>
                         @endif
                       </td>
